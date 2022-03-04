@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="cmdb_ci" label="WS1" max_length="40" name="x_58872_needit_x_ritsc_a200002101_workspace_one" type="collection">
+        <element label="Computer name" max_length="40" name="computer_name" type="string"/>
+        <element label="Enrollment status" max_length="40" name="enrollment_status" type="string"/>
+        <element label="RUID" max_length="40" name="ruid" type="string"/>
+        <element label="Delete scheduled date" max_length="40" name="u_delete_scheduled_date" type="glide_date"/>
+        <element label="Device id" max_length="40" name="u_device_id" type="string"/>
+        <element label="Last import date" max_length="40" name="u_last_import_date" type="glide_date"/>
+        <element label="Mail address" max_length="40" name="u_mail_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Ws1 cooperation status" max_length="40" name="u_ws1_cooperation_status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="削除待ち" value="130"/>
+                <element inactive_on_update="false" label="削除済" value="140"/>
+                <element inactive_on_update="false" label="猶予期間中" value="120"/>
+                <element inactive_on_update="false" label="登録待ち" value="100"/>
+                <element inactive_on_update="false" label="登録済" value="110"/>
+            </choice>
+        </element>
+    </element>
+</database>

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>削除対象取得</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+// ①Perfect Finderテーブル上で条件に合致したレコードを抽出しシリアル番号をWorkspace Oneの削除処理対象とする
+// 削除対象は、新規に削除状態となったSKYSEA登録済のコンピュータで同一シリアル番号で稼働中のSKYSEA登録済のコンピュータがないもの。
+// 対象テーブル：
+// 　x_ritsc_a200002101_perfect_finder
+// 抽出条件：
+// 　機材明細：稼働ステータス名：status が 「解約済み」「廃棄済み」「紛失」「返却済み」
+// 　かつ
+//   SKYSEA連携フラグ:u_skysea_cooperation_flg が「TRUE」のもの
+// 　（SKYSEA連携フラグは、機材(AGENT)：シリアル番号用の独自カラムに変更になる予定）
+// 　かつ
+// 　インポート日:sys_updated_onが当日のもの
+// 　かつ
+// 　同一シリアル番号で以下の状態のレコードが存在しない
+// 　（機材明細：稼働ステータス名が 「解約済み」「廃棄済み」「紛失」「返却済み」ではない
+// 　かつ
+//   SKYSEA連携フラグ:u_skysea_cooperation_flg が「TRUE」のもの
+// 　（SKYSEA連携フラグは、機材(AGENT)：シリアル番号用の独自カラムに変更になる予定））
+
+// ②Workspace Oneテーブルの①で削除対象となったシリアル番号のレコードに削除予定日を設定する
+// 対象テーブル：
+// 　x_ritsc_a200002101_workspace_one
+// 抽出条件：
+// 　シリアル番号:serial_number：①で削除対象となったシリアル番号
+// 更新情報：
+// 　削除予定日:u_delete_scheduled_date：14日後の日付
+
+// ③Workspace oneテーブルの①で削除対象となったシリアル番号で、enrollment_status が「Enrolled」のレコードのメールアドレス宛に、Perfect Finder から削除されたために Workspace One 上で削除待ちとなった旨を通知（メール送付）する
+// （通知機能の呼び出しはTBD）
+// ※通知内容については[ServiceNow]PerfectFinder・WS1連携機能開発_メール通知設計 参照
+
+// ④削除予定日に達したシリアル番号と同一のシリアル番号のレコードに削除予定日が設定されていないものがあれば、Workspace Oneにのみ追加されたものと判断し、該当のシリアル番号の全レコードの削除予定日を削除する。
+
+// 対象テーブル：
+// 　x_ritsc_a200002101_workspace_one
+// 抽出条件：
+// 　削除予定日:u_delete_scheduled_date：当日以前かつ3日前まで
+// 　かつ
+// 　（シリアル番号：上記で抽出されたレコードのシリアル番号
+// 　かつ
+// 　削除予定日:NULL）
+// 更新情報
+// 　削除予定日:NULL
+
+//   ⑤削除予定日に達したシリアル番号がPF側でも削除状態になっていることを確認する
+// 以下の条件でレコードが抽出されないこと
+
+// 対象テーブル：
+// 　x_ritsc_a200002101_perfect_finder
+// 抽出条件：
+// 　シリアル番号：削除予定日に達したシリアル番号
+// 　かつ
+// 　機材明細：稼働ステータス名が 「解約済み」「廃棄済み」「紛失」「返却済み」ではない
+// ⑥Workspace Oneテーブル上で条件に合致したレコードを抽出し、一定数（99件）までを削除対象として、JSON形式で返す。
+// 削除対象は削除予定日の古い順、シリアル番号の小さい順とする
+
+// 対象テーブル：
+// 　x_ritsc_a200002101_workspace_one
+// 抽出条件：
+// 　削除予定日:u_delete_scheduled_date：当日以前かつ3日前まで
+// ⑦削除対象が一定数（99件）を超過した場合、以下の処理を行う。
+// ・運用担当者に削除件数が一定数以上となった旨の通知（メール送付）を行う
+//   超過デバイスの一覧をCSV添付する
+// （通知機能の呼び出しはTBD）
+// 運用担当者メールアドレス：coins-spt-vmware-ws1@ml.jp.ricoh.com
+// ※通知内容については[ServiceNow]PerfectFinder・WS1連携機能開発_メール通知設計 参照
+// ・削除予定日を翌日の日付に更新する
+ 
+ 
+    try {
+        gs.info('【Client_Security Develop:WorkspaceONE連携:削除対象取得】Started');
+
+        //         QueryString = 'status=150^ORstatus=110^ORstatus=120^ORstatus=130^u_skysea_cooperation_flg=true^sys_updated_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()';
+        //         var gr = new GlideRecord('x_58872_needit_x_ritsc_a200002101_perfect_finder');
+        //         gr.addEncodedQuery(QueryString);
+        //         gr.orderBy('serial_number');
+        //         gr.query();
+
+        //         QueryString2 = 'serial_number=99999999999^ORserial_number=99999999991^ORserial_number=99999999992';
+        // 		var gr2 = new GlideRecord('x_58872_needit_x_ritsc_a200002101_workspace_one');
+        //         gr2.addEncodedQuery(QueryString2);
+        //         gr2.orderBy('serial_number');
+        //         gr2.query();
+
+        var serialList = [];
+        var body = {};
+        var body2 = {};
+        var body3 = {};
+		body["serialNums"] = body2;
+		body2["serialNum","devs"] = "99999999999",body3;
+		body3["sys_id","dev_id"] = "aaaaa","nnn";
+        serialList.push(body);
+// 		body = {};
+// 		body.serialNum = "99999999991";
+//         serialList.push(body);
+// 		body = {};
+// 		body.serialNum = "99999999992";
+//         serialList.push(body);
+//         body["serialNum","dev"] = "99999999999","aaa";
+//         serialList.push(body);
+//         body["serialNum","dev"] = "99999999999","bbb";
+//         serialList.push(body);
+//         body["serialNum","dev"] = "99999999999","ccc";
+//         serialList.push(body);
+//         body["serialNum","dev"] = "99999999999","ddd";
+// 		serialList.push(body);
+//         body["serialNum","dev"] = "99999999991","eee";
+//         serialList.push(body);
+//         body["serialNum","dev"] = "99999999991","fff";
+//         serialList.push(body);
+//         body["serialNum"] = "99999999991";
+// 		serialList.push(body);
+//         body["serialNum","dev"] = "99999999992","ggg";
+//         serialList.push(body);
+
+
+
+        //         //MIDサーバに渡すシリアル番号のリストをJson形式に変換する
+        //         //同一シリアル番号の場合は連携しない
+        //         var serialList = [];
+        //         var preSerialNum = '';
+        //         while (gr.next()) {
+        //             var serialNum = gr.getValue('serial_number');
+
+        //             // 前のレコード同一シリアル番号の場合は連携しない
+        //             if (preSerialNum == serialNum) {
+        //                 continue;
+        //             }
+        //             preSerialNum = serialNum;
+        //             serialList.push(serialNum);
+        //         }
+        response.setStatus(200);
+        response.setBody(serialList);
+        gs.info('【Client_Security Develop:WorkspaceONE連携:登録対象取得】Ended');
+    } catch (e) {
+        //例外が発生した場合は500を返す
+        response.setStatus(500);
+        gs.error("【Client_Security Develop:WorkspaceONE連携:登録対象取得】Abnormal Ended.");
+    }
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_58872_needit/perfectfinder/serials/need_delete</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/serials/need_delete</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description>PerfectFinderテーブルとWorkspaceOneテーブルからWorkspaceONEに削除対象として連携すべきデータを抽出し、シリアル番号を渡す</short_description>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-03 05:49:45</sys_created_on>
+        <sys_id>9350173387d10110d60b0f69cebb3565</sys_id>
+        <sys_mod_count>11</sys_mod_count>
+        <sys_name>削除対象取得</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ws_operation_9350173387d10110d60b0f69cebb3565</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-08 04:32:25</sys_updated_on>
+        <web_service_definition display_value="WorkspaceONE連携3">c791c83d87dd0110d60b0f69cebb3589</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

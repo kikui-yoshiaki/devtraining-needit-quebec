@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_choice action="INSERT_OR_UPDATE" field="skysea_flg" table="x_58872_needit_pf" version="3">
+        <sys_choice_set action="INSERT_OR_UPDATE">
+            <element>skysea_flg</element>
+            <name>x_58872_needit_pf</name>
+            <sys_class_name>sys_choice_set</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:21:39</sys_created_on>
+            <sys_id>f5393629871d0110d60b0f69cebb35f7</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>skysea_flg</sys_name>
+            <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+            <sys_update_name>sys_choice_x_58872_needit_pf_skysea_flg</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:21:39</sys_updated_on>
+        </sys_choice_set>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>稼働中</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:21:39</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>95297229871d0110d60b0f69cebb356a</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:21:44</sys_updated_on>
+            <value>100</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>廃棄済み</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:21:54</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fd39f629871d0110d60b0f69cebb353c</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:21:57</sys_updated_on>
+            <value>110</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>紛失</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:22:05</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>61493e29871d0110d60b0f69cebb354a</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:22:12</sys_updated_on>
+            <value>120</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>返却済み</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:22:19</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>dc593e29871d0110d60b0f69cebb354a</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:22:25</sys_updated_on>
+            <value>130</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>遊休中</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:22:46</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>fa69fa29871d0110d60b0f69cebb3568</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:22:51</sys_updated_on>
+            <value>140</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>解約済み</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:22:32</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>a3597a29871d0110d60b0f69cebb35a0</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:22:37</sys_updated_on>
+            <value>150</value>
+        </sys_choice>
+        <sys_choice action="INSERT_OR_UPDATE">
+            <dependent_value/>
+            <element>skysea_flg</element>
+            <hint/>
+            <inactive>false</inactive>
+            <label>故障中</label>
+            <language>en</language>
+            <name>x_58872_needit_pf</name>
+            <sequence/>
+            <synonyms/>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-01-27 04:23:03</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>0a797229871d0110d60b0f69cebb356d</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-01-27 04:23:08</sys_updated_on>
+            <value>160</value>
+        </sys_choice>
+    </sys_choice>
+</record_update>

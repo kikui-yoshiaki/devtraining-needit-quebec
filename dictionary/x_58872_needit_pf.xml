@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element label="PF連携テーブル_" max_length="40" name="x_58872_needit_pf" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="status" max_length="40" name="status" type="choice">
+            <choice/>
+        </element>
+        <element label="Delete scheduled date" max_length="40" name="u_delete_scheduled_date" type="glide_date"/>
+        <element label="Last import date" max_length="40" name="u_last_import_date" type="glide_date"/>
+        <element label="Mail address" max_length="40" name="u_mail_address" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Skysea cooperation flg" max_length="40" name="u_skysea_cooperation_flg" type="boolean"/>
+        <element attributes="edge_encryption_enabled=true" choice="1" label="Ws1 cooperation status" max_length="40" name="u_ws1_cooperation_status" type="choice">
+            <choice/>
+        </element>
+    </element>
+</database>

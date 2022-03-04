@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>test</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    var serialList = {
+        'dev_id': '1',
+        'sys_id': '2'
+    };
+    var serialList2 = [];
+
+    serialList2.push(serialList);
+    serialList2.push(serialList);
+    var serialList3 = {
+        "serialNum": '111',
+        "devList": serialList2
+    };
+
+	var serialList4 = [];
+	serialList4.push(serialList3);
+	
+    serialList = {
+        'dev_id': '3',
+        'sys_id': '4'
+    };
+    serialList2 = [];
+
+    serialList2.push(serialList);
+    serialList2.push(serialList);
+    serialList3 = {
+        "serialNum": '222',
+        "devList": serialList2
+    };
+	serialList4.push(serialList3);
+    //     var body = {};
+    //     var body2 = {};
+    //     var body3 = {};
+    //     //body["serialNums"] = body2;
+    //     body["serialNum"] = "99999999999";
+    //     serialList.push(body);
+    // //	body["body2"] = body2;
+    //     body2["sys_id"] = "aaaaa";
+    //     body2["dev_id"] = "nnn";
+    //     serialList2.push(body2);
+    //     body2 = {};
+    // //	body["body2"] = body2;
+    //     body2["sys_id"] = "bbbbb";
+    //     body2["dev_id"] = "ppp";
+    //     serialList2.push(body2);
+    //body3["sys_id", "dev_id"] = "aaaaa", "nnn";
+    //     serialList.push(body2);
+    response.setStatus(200);
+    response.setBody(serialList4);
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_58872_needit/perfectfinder</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-02-03 07:54:57</sys_created_on>
+        <sys_id>102de37387150110d60b0f69cebb3512</sys_id>
+        <sys_mod_count>18</sys_mod_count>
+        <sys_name>test</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ws_operation_102de37387150110d60b0f69cebb3512</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-03 08:58:22</sys_updated_on>
+        <web_service_definition display_value="WorkspaceONE連携3">c791c83d87dd0110d60b0f69cebb3589</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

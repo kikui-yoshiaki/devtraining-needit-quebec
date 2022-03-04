@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>GET</http_method>
+        <name>登録対象取得</name>
+        <operation_script><![CDATA[(function process( /*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+    //①Perfect Finderテーブル上で条件に合致したレコードを抽出しシリアル番号をWorkspace oneの登録処理対象とする
+    //対象テーブル：
+    //x_ritsc_a200002101_perfect_finder
+    // 抽出条件：
+    //機材明細：稼働ステータス名が 「解約済み」「廃棄済み」「紛失」「返却済み」ではない
+    //かつ
+    // SKYSEA連携フラグが「TRUE」のもの
+    //かつ
+    //インポート日が当日のもの
+    try {
+		gs.info('【Client_Security Develop:WorkspaceONE連携:登録対象取得】Started');
+        QueryString = 'status!=150^status!=110^status!=120^status!=130^u_skysea_cooperation_flg=true^sys_updated_onONToday@javascript:gs.beginningOfToday()@javascript:gs.endOfToday()';
+
+        var gr = new GlideRecord('x_58872_needit_x_ritsc_a200002101_perfect_finder');
+        gr.addEncodedQuery(QueryString);
+        gr.orderBy('serial_number');
+        gr.query();
+
+        //MIDサーバに渡すシリアル番号のリストをJson形式に変換する
+        //同一シリアル番号の場合は連携しない
+        var serialList = [];
+        var preSerialNum = '';
+        while (gr.next()) {
+            var serialNum = gr.getValue('serial_number');
+
+            // 前のレコード同一シリアル番号の場合は連携しない
+            if (preSerialNum == serialNum) {
+                continue;
+            }
+            preSerialNum = serialNum;
+            serialList.push(serialNum);
+        }
+        response.setStatus(200);
+        response.setBody(serialList);
+		gs.info('【Client_Security Develop:WorkspaceONE連携:登録対象取得】Ended');
+	} catch (e) {
+        //例外が発生した場合は500を返す
+        response.setStatus(500);
+		gs.error("【Client_Security Develop:WorkspaceONE連携:登録対象取得】Abnormal Ended.");
+    }
+})(request, response);]]></operation_script>
+        <operation_uri>/api/x_58872_needit/perfectfinder/serials/need_regist</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/serials/need_regist</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description>work</short_description>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-01-27 09:40:00</sys_created_on>
+        <sys_id>4dd18c3d87dd0110d60b0f69cebb35c4</sys_id>
+        <sys_mod_count>31</sys_mod_count>
+        <sys_name>登録対象取得</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_ws_operation_4dd18c3d87dd0110d60b0f69cebb35c4</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-02-04 02:45:07</sys_updated_on>
+        <web_service_definition display_value="WorkspaceONE連携3">c791c83d87dd0110d60b0f69cebb3589</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

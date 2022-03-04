@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="cmdb_ci" label="PF2" max_length="40" name="x_58872_needit_x_ritsc_a200002101_perfect_finder" type="collection">
+        <element attributes="edge_encryption_enabled=true" choice="1" label="status" max_length="40" name="status" type="choice">
+            <choice>
+                <element inactive_on_update="false" label="不在" value="190"/>
+                <element inactive_on_update="false" label="予約中" value="200"/>
+                <element inactive_on_update="false" label="廃棄済み" value="110"/>
+                <element inactive_on_update="false" label="故障中" value="160"/>
+                <element inactive_on_update="false" label="申請中" value="170"/>
+                <element inactive_on_update="false" label="稼働中" value="100"/>
+                <element inactive_on_update="false" label="紛失" value="120"/>
+                <element inactive_on_update="false" label="解約済み" value="150"/>
+                <element inactive_on_update="false" label="貸出在庫" value="180"/>
+                <element inactive_on_update="false" label="返却済み" value="130"/>
+                <element inactive_on_update="false" label="遊休中" value="140"/>
+            </choice>
+        </element>
+        <element attributes="edge_encryption_enabled=true" label="Skysea cooperation flg" max_length="40" name="u_skysea_cooperation_flg" type="boolean"/>
+    </element>
+</database>
